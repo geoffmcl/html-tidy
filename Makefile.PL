@@ -9,8 +9,8 @@ use ExtUtils::MakeMaker;
 use ExtUtils::Liblist;
 use Config;
 
-my $libs = '-ltidyp';
-my $inc = "-I. -I/usr/include/tidyp -I/usr/local/include/tidyp -I$Config{usrinc}/tidyp";
+my $libs = '-ltidys';
+my $inc = "-I. -I/usr/include -I$Config{usrinc}/tidy";
 
 eval { require Alien::Tidyp; };
 
@@ -20,15 +20,15 @@ if ( !$@ ) {
     $inc = Alien::Tidyp->config('INC');
 }
 else {
-    print "Alien::Tidyp not found. Looking for for tidyp on your system.\n";
-    my @vars = ExtUtils::Liblist->ext( '-L/usr/lib -L/usr/local/lib -ltidyp', 0, 1 );
+    print "Alien::Tidyp not found. Looking for for tidys on your system.\n";
+    my @vars = ExtUtils::Liblist->ext( '-L/usr/lib -L/usr/local/lib -ltidys', 0, 1 );
     $libs = $vars[2];
 
     if ( !$libs ) {
-        $libs = '-ltidyp';
+        $libs = '-ltidys';
         print <<'EOF';
 
-It seems that you don't have tidyp installed.  HTML::Tidy does no
+It seems that you don't have tidys installed.  HTML::Tidy does no
 real work on its own.  It's just a wrapper aound tidyp.
 
 Please read the README.markdown file for details on how to install.

@@ -2,8 +2,8 @@
 #include "perl.h"
 #include "XSUB.h"
 
-#include <tidyp.h>
-#include <buffio.h>
+#include <tidy.h>
+#include <tidybuffio.h>
 #include <stdio.h>
 #include <errno.h>
 
@@ -196,7 +196,8 @@ _tidyp_version()
     PREINIT:
         const char* version;
     CODE:
-        version = tidyVersion();
+        version = tidyLibraryVersion();
         RETVAL = newSVpv(version,0); /* will be automatically "mortalized" */
     OUTPUT:
         RETVAL
+ 
