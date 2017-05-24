@@ -90,7 +90,6 @@ sub new {
     my $class = shift;
     my $args = shift || {};
     my @unsupported_options = qw(
-        force-output
         gnu-emacs-file
         gnu-emacs
         keep-time
