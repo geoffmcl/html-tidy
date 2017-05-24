@@ -8,3 +8,10 @@ Tidy.bs
 Tidy.c
 MYMETA.json
 MYMETA.yml
+*.bak
+Tidy.def
+*.obj
+*.old
+*.pdb
+bldlog-1.txt
+temp*
