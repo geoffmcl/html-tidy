@@ -14,7 +14,7 @@ use HTML::Tidy;
 
 my $html = do { local $/; <DATA> };
 
-my $tidy = HTML::Tidy->new;
+my $tidy = HTML::Tidy->new( { force_output => 1 } );
 isa_ok( $tidy, 'HTML::Tidy' );
 $tidy->ignore( type => TIDY_INFO );
 $tidy->clean( $html );
