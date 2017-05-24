@@ -9,8 +9,11 @@ use ExtUtils::MakeMaker;
 use ExtUtils::Liblist;
 use Config;
 
+###my $iroot = 'F:/Projects/mingw64';
+###my $iroot = 'F:/Projects/win64-mt';
+my $iroot = 'F:/Projects/software.x64';
 my $libs = '-ltidys';
-my $inc = "-I. -IF:/Projects/software.x64/include";
+my $inc = "-I. -I$iroot/include -I$iroot/include/tidy";
 
 eval { require Alien::Tidyp; };
 
@@ -21,7 +24,7 @@ if ( !$@ ) {
 }
 else {
     print "Alien::Tidyp not found. Looking for for tidys on your system.\n";
-    my @vars = ExtUtils::Liblist->ext( '-LF:/Projects/software.x64/lib -ltidys', 0, 1 );
+    my @vars = ExtUtils::Liblist->ext( "-L$iroot/lib -ltidys", 0, 1 );
     $libs = $vars[2];
 
     if ( !$libs ) {
@@ -40,6 +43,8 @@ http://github.com/petdance/html-tidy/issues, so we can fix the
 library detection code.
 
 EOF
+    } else {
+        print "Found and using '$libs'...\n";
     }
 }
 
