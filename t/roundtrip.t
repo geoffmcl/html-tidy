@@ -7,7 +7,8 @@ use Test::More tests => 3;
 
 use HTML::Tidy;
 
-my $args = { newline => 'Lf' };
+my $args = { tidy_mark => 0,
+    newline => 'Lf' };
 my $tidy = HTML::Tidy->new($args);
 isa_ok( $tidy, 'HTML::Tidy' );
 $tidy->ignore( type => TIDY_INFO );
@@ -25,16 +26,15 @@ my @messages = $tidy->messages( $clean );
 
 is_deeply( \@messages, [], q{The cleaned stuff shouldn't have any errors} );
 
-$clean =~ s/"(HTML Tidy|tidyp).+w3\.org"/"Tidy"/;
+# $clean =~ s/"(HTML Tidy|tidyp).+w3\.org"/"Tidy"/;
 
 my $expected = do { local $/ = undef; <DATA> };
 is( $clean, $expected, 'Cleaned up properly' );
 
 __DATA__
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!DOCTYPE html>
 <html>
 <head>
-<meta name="generator" content="Tidy">
 <title></title>
 </head>
 <body>
