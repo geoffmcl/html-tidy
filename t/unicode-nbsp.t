@@ -14,7 +14,8 @@ my $perl_chars   = Encode::decode('utf8',$bytes_string); #perl chars of utf8 byt
 
 my $expected_after_tidy = "&nbsp;\n"; # HTML::Tidy adds a \n and should convert the nbsp to an HTML entity
 
-my $tidy = HTML::Tidy->new({ show_body_only => 1 });
+my $tidy = HTML::Tidy->new({ show_body_only => 1,
+    newline => 'Lf' });
 
 is( $tidy->clean( $perl_chars ), $expected_after_tidy, 'Perl chars OK' );
 is( $tidy->clean( $bytes_string ), $expected_after_tidy, 'Byte string OK' );
