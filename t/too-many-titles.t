@@ -11,7 +11,7 @@ my $html = join '', <DATA>;
 
 my @expected = split /\n/, q{
 - (1:1) Warning: missing <!DOCTYPE> declaration
-- (4:9) Warning: too many title elements in <head>
+- (4:9) Warning: too many title elements in <title>
 };
 chomp @expected;
 shift @expected; # First one's blank
@@ -32,7 +32,7 @@ __DATA__
         <TITLE>Test stuff</TITLE>
         <TITLE>As if one title isn't enough</TITLE>
     </HEAD>
-    <BODY BGCOLOR="white">
+    <BODY>
         <P>This is my paragraph</P>
     </BODY>
 </HTML>
