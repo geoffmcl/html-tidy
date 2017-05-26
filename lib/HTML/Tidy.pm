@@ -260,9 +260,8 @@ sub _parse_errors {
             my $text = $1;
             $message = HTML::Tidy::Message->new( $filename, TIDY_INFO, undef, undef, $text );
         }
-        elsif ( $line =~ /^\d+ warnings?, \d+ errors? were found!/ ) {
-            # Summary line we don't want
-
+        elsif ( $line =~ /^Tidy found \d+ warning(s*) and \d+ error(s*)!/ ) {
+            # Tidy 5.5.27+ - Updated summary line we don't want
         }
         elsif ( $line eq 'No warnings or errors were found.' ) {
             # Summary line we don't want
