@@ -22,7 +22,9 @@
 @if ERRORLEVEL 1 goto ERR0
 @REM call setupqt64
 @cd %BLDDIR%
-@REM http://search.cpan.org/~bingos/ExtUtils-MakeMaker-7.24/lib/ExtUtils/MakeMaker.pm#How_To_Write_A_Makefile.PL
+@REM Remove/Rename previous Makefile
+@if EXIST Makefile @del Makefile
+@REM  http://search.cpan.org/~bingos/ExtUtils-MakeMaker-7.24/lib/ExtUtils/MakeMaker.pm#How_To_Write_A_Makefile.PL
 @REM Can maybe add 'LINKTYPE=static', also maybe to make
 @set TMPOPTS=verbose
 @set TMPCMD=perl -f %TMPPL% %TMPOPTS%
@@ -30,6 +32,14 @@
 @echo Doing '%TMPCMD%' >> %TMPLOG%
 @%TMPCMD% >> %TMPLOG% 2>&1
 @if ERRORLEVEL 1 goto ERR1
+@if NOT EXIST Makefile goto NOMAKE
+
+@REM ****************************************************************************************
+@REM Until 'ExtUtils::MakeMaker' can be convinced to **NOT** add `-nodefaultlib` to 'Makefile'
+@echo Doing 'call modmakefile Makefile'
+@echo Doing 'call modmakefile Makefile' >> %TMPLOG%
+@call modmakefile Makefile >> %TMPLOG%
+@REM ****************************************************************************************
 
 @echo Doing 'nmake'
 @echo Doing 'nmake' >> %TMPLOG%
@@ -50,6 +60,8 @@
 @echo Error: MSVC %VCVERS% setup error!!!
 @goto ISERR
 
+:NOMAKE
+@echo Error: Appears NO Makefile created
 :ERR1
 @echo Error doing '%TMPCMD%'! See %TMPLOG%
 @goto ISERR
