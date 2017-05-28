@@ -9,7 +9,6 @@ use Test::More;
 use HTML::Tidy;
 
 my @unsupported_options = qw(
-    force-output
     gnu-emacs-file
     gnu-emacs
     keep-time
