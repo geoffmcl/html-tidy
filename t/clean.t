@@ -8,7 +8,9 @@ use Test::More tests => 3;
 
 use HTML::Tidy;
 
-my $tidy = HTML::Tidy->new;
+my $args = { newline => 'Lf',
+    tidy_mark => 0 };
+my $tidy = HTML::Tidy->new( $args );
 isa_ok( $tidy, 'HTML::Tidy' );
 
 my $expected_pattern = 'Usage: clean($str [, $str...])';
@@ -25,10 +27,9 @@ is(
 
 sub _expected_empty_html {
     return <<'ENDHTML';
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!DOCTYPE html>
 <html>
 <head>
-<meta name="generator" content="tidyp for Linux (v1.02), see www.w3.org">
 <title></title>
 </head>
 <body>
