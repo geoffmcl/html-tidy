@@ -7,7 +7,8 @@ use Test::More tests => 3;
 use HTML::Tidy;
 my $html = do { local $/ = undef; <DATA>; };
 
-my $tidy = HTML::Tidy->new;
+my $args = { force_output => 1 };
+my $tidy = HTML::Tidy->new( $args );
 isa_ok( $tidy, 'HTML::Tidy' );
 $tidy->clean( $html );
 isa_ok( $tidy, 'HTML::Tidy' );
