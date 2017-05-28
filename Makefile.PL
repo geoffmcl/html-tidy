@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker;
 use ExtUtils::Liblist;
 use Config;
 
-my $libs = '-ltidys';
+my $libs = '-ltidy';
 my $inc = "-I. -I/usr/include -I$Config{usrinc}/tidy";
 
 eval { require Alien::Tidyp; };
@@ -20,7 +20,7 @@ if ( !$@ ) {
     $inc = Alien::Tidyp->config('INC');
 }
 else {
-    print "Alien::Tidyp not found. Looking for for tidys on your system.\n";
+    print "Alien::Tidyp not found. Looking for for tidy on your system.\n";
     my @vars = ExtUtils::Liblist->ext( '-L/usr/lib -L/usr/local/lib -ltidy', 0, 1 );
     $libs = $vars[2];
 
@@ -28,18 +28,20 @@ else {
         $libs = '-ltidy';
         print <<'EOF';
 
-It seems that you don't have tidys installed.  HTML::Tidy does no
+It seems that you don't have tidy installed.  HTML::Tidy does no
 real work on its own.  It's just a wrapper aound tidyp.
 
-Please read the README.markdown file for details on how to install.
+Please read the README.markdown file for details on how to install tidyp.
 
 If you do have tidyp installed, but Makefile.PL can't detect it,
 go ahead and try building.  If HTML::Tidy builds and tests correctly,
 please file a ticket at Github at
-http://github.com/petdance/html-tidy/issues.  so we can fix the
+http://github.com/petdance/html-tidy/issues, so we can fix the
 library detection code.
 
 EOF
+    } else {
+        print "Found and using '$libs'...\n";
     }
 }
 
@@ -60,7 +62,9 @@ my $parms = {
     VERSION_FROM        => 'lib/HTML/Tidy.pm',
     ABSTRACT_FROM       => 'lib/HTML/Tidy.pm',
     PREREQ_PM           => {
+        'Encode'        => 0,   # for tests
         'Exporter'      => 0,
+        'Getopt::Long'  => 0,   # in webtidy
         'Test::More'    => '0.98', # For subtest()
         'Test::Builder' => 0,
         'Carp'          => 0,
@@ -101,7 +105,7 @@ return <<'MAKE_FRAG';
 tags:
 	ctags -f tags --recurse --totals \
 		--exclude=blib --exclude=t/lib \
-		--exclude=.svn --exclude='*~' \
+		--exclude=.git --exclude='*~' \
 		--languages=C,Perl --langmap=Perl:+.t \
 		.
 

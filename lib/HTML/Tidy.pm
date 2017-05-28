@@ -13,11 +13,11 @@ HTML::Tidy - (X)HTML validation in a Perl object
 
 =head1 VERSION
 
-Version 1.56
+Version 1.58
 
 =cut
 
-our $VERSION = '1.56';
+our $VERSION = '1.58';
 
 =head1 SYNOPSIS
 
@@ -90,7 +90,6 @@ sub new {
     my $class = shift;
     my $args = shift || {};
     my @unsupported_options = qw(
-        force-output
         gnu-emacs-file
         gnu-emacs
         keep-time
@@ -219,7 +218,7 @@ sub parse {
     my $self = shift;
     my $filename = shift;
     if (@_ == 0) {
-        Carp::croak('Usage: parser($filename,$str [, $str...])') ## no critic
+        Carp::croak('Usage: parse($filename,$str [, $str...])') ## no critic
     }
     my $html = join( '', @_ );
 
@@ -447,7 +446,7 @@ Andy Lester, C<< <andy at petdance.com> >>
 
 =head1 COPYRIGHT & LICENSE
 
-Copyright (C) 2005-2013 by Andy Lester
+Copyright (C) 2005-2017 by Andy Lester
 
 This library is free software.  You mean modify or distribute it under
 the Artistic License v2.0.
