@@ -12,7 +12,8 @@ use Encode;
 my $bytes_string = "\x{c2}\x{a0}"; #UTF8 nbsp
 my $perl_chars   = Encode::decode('utf8',$bytes_string); # Perl chars of utf8 byte string
 
-my $tidy = HTML::Tidy->new({ show_body_only => 1 });
+my $tidy = HTML::Tidy->new({ show_body_only => 1,
+    newline => 'Lf' });
 
 my $newline = $tidy->clean( '' ); # HTML::Tidy adds a platform-dependent "newline".
 like( $newline, qr/^\r?\n?$/, 'Tidy Newline' ); # should be CR or LF or both

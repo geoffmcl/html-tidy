@@ -2,6 +2,9 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#ifdef _WIN32
+#define TIDY_CALL __cdecl
+#endif /* _WIN32 */
 #include <tidy.h>
 #include <tidybuffio.h>
 #include <stdio.h>
