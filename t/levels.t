@@ -7,17 +7,17 @@ use Test::More tests => 3;
 
 use HTML::Tidy;
 
-my $tidy = HTML::Tidy->new;
+my $args = { force_output => 1 };
+my $tidy = HTML::Tidy->new( $args );
 isa_ok( $tidy, 'HTML::Tidy' );
 my $rc = $tidy->parse( '-', <DATA> );
 ok( $rc, 'Parsed OK' );
 
 my @expected = split /\n/, q{
-- (1:1) Warning: missing <!DOCTYPE> declaration
-- (23:1) Error: <bogotag> is not recognized!
-- (23:1) Warning: discarding unexpected <bogotag>
-- (24:XX) Warning: unescaped & which should be written as &amp;
-- (24:XX) Warning: unescaped & which should be written as &amp;
+- (25:1) Error: <bogotag> is not recognized!
+- (25:1) Warning: discarding unexpected <bogotag>
+- (26:XX) Warning: unescaped & which should be written as &amp;
+- (26:XX) Warning: unescaped & which should be written as &amp;
 };
 chomp @expected;
 shift @expected; # First one's blank
@@ -41,6 +41,8 @@ sub munge_returned {
 }
 
 __DATA__
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=iso-8859-1">
