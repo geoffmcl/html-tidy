@@ -21,11 +21,11 @@ if ( !$@ ) {
 }
 else {
     print "Alien::Tidyp not found. Looking for for tidys on your system.\n";
-    my @vars = ExtUtils::Liblist->ext( '-L/usr/lib -L/usr/local/lib -ltidys', 0, 1 );
+    my @vars = ExtUtils::Liblist->ext( '-L/usr/lib -L/usr/local/lib -ltidy', 0, 1 );
     $libs = $vars[2];
 
     if ( !$libs ) {
-        $libs = '-ltidys';
+        $libs = '-ltidy';
         print <<'EOF';
 
 It seems that you don't have tidys installed.  HTML::Tidy does no
@@ -112,3 +112,6 @@ critic:
 
 MAKE_FRAG
 }
+
+# eof
+
