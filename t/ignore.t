@@ -10,22 +10,22 @@ use HTML::Tidy;
 my $html = do { local $/ = undef; <DATA> };
 
 my @expected_warnings = split /\n/, q{
-- (1:1) Warning: missing <!DOCTYPE> declaration
-- (23:1) Warning: discarding unexpected <bogotag>
-- (24:XX) Warning: unescaped & which should be written as &amp;
-- (24:XX) Warning: unescaped & which should be written as &amp;
+- (25:1) Warning: discarding unexpected <bogotag>
+- (26:XX) Warning: unescaped & which should be written as &amp;
+- (26:XX) Warning: unescaped & which should be written as &amp;
 };
 chomp @expected_warnings;
 shift @expected_warnings; # First one's blank
 
 my @expected_errors = split /\n/, q{
-- (23:1) Error: <bogotag> is not recognized!
+- (25:1) Error: <bogotag> is not recognized!
 };
 chomp @expected_errors;
 shift @expected_errors; # First one's blank
 
 WARNINGS_ONLY: {
-    my $tidy = HTML::Tidy->new;
+    my $args = { force_output => 1 };
+    my $tidy = HTML::Tidy->new( $args );
     isa_ok( $tidy, 'HTML::Tidy' );
 
     $tidy->ignore( type => TIDY_ERROR );
@@ -39,7 +39,8 @@ WARNINGS_ONLY: {
 }
 
 ERRORS_ONLY: {
-    my $tidy = HTML::Tidy->new;
+    my $args = { force_output => 1 };
+    my $tidy = HTML::Tidy->new( $args );
     isa_ok( $tidy, 'HTML::Tidy' );
 
     $tidy->ignore( type => TIDY_WARNING );
@@ -52,7 +53,8 @@ ERRORS_ONLY: {
 }
 
 DIES_ON_ERROR: {
-    my $tidy = HTML::Tidy->new;
+    my $args = { force_output => 1 };
+    my $tidy = HTML::Tidy->new( $args );
     isa_ok( $tidy, 'HTML::Tidy' );
 
     my $rc = eval { $tidy->ignore( blongo => TIDY_WARNING ) };
@@ -71,6 +73,8 @@ sub munge_returned {
     }
 }
 __DATA__
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
 <HEAD>
 	<META HTTP-EQUIV="Content-Type" CONTENT="text/html;CHARSET=iso-8859-1">
