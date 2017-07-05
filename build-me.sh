@@ -7,7 +7,7 @@ if [ -f "$TMPLOG" ]; then
 fi
 
 echo "$BN: Build of HTML::Tidy... out to '$TMPLOG'"
-echo "$BN: Build of HTML::Tidy... out to '$TMPLOG'" > $TMPLOG$
+echo "$BN: Build of HTML::Tidy... out to '$TMPLOG'" > $TMPLOG
 if [ -f "Makefile" ]; then
     rm -fv Makefile
 fi

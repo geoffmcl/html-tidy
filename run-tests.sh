@@ -7,7 +7,7 @@ if [ -f "$TMPLOG" ]; then
 fi
 
 echo "$BN: Testing HTML::Tidy... out to '$TMPLOG'"
-echo "$BN: Testing of HTML::Tidy... out to '$TMPLOG'" > $TMPLOG$
+echo "$BN: Testing of HTML::Tidy... out to '$TMPLOG'" > $TMPLOG
 
 echo "$BN: Doing 'make test'"
 echo "$BN: Doing 'make test'" >> $TMPLOG
@@ -20,6 +20,4 @@ fi
 echo "$BN: Appears operation suceeded... time for 'make install' if desired..."
 
 # eof
-
-
 
