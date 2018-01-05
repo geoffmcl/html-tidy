@@ -7,7 +7,8 @@ use Test::More tests => 3;
 
 use HTML::Tidy;
 
-my $args = { force_output => 1 };
+my $args = { force_output => 1,
+             'config_file' => 't/levels.cfg' };
 my $tidy = HTML::Tidy->new( $args );
 isa_ok( $tidy, 'HTML::Tidy' );
 my $rc = $tidy->parse( '-', <DATA> );
