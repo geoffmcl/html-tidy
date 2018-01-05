@@ -13,11 +13,11 @@ HTML::Tidy - (X)HTML validation in a Perl object
 
 =head1 VERSION
 
-Version 1.58
+Version 5.61
 
 =cut
 
-our $VERSION = '1.58';
+our $VERSION = '5.61';
 
 =head1 SYNOPSIS
 
