@@ -11,7 +11,7 @@ my $html = join '', <DATA>;
 
 my @expected = split /\n/, q{
 - (1:1) Warning: missing <!DOCTYPE> declaration
-- (4:9) Warning: too many title elements in <title>
+- (2:5) Warning: too many title elements in <title>
 };
 chomp @expected;
 shift @expected; # First one's blank
