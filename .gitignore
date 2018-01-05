@@ -15,3 +15,4 @@ Tidy.def
 *.pdb
 bldlog-1.txt
 temp*
+Makefile.mak
