@@ -24,7 +24,8 @@ chomp @expected_errors;
 shift @expected_errors; # First one's blank
 
 WARNINGS_ONLY: {
-    my $args = { force_output => 1 };
+    my $args = { force_output => 1,
+                 'config_file' => 't/ignore.cfg' };
     my $tidy = HTML::Tidy->new( $args );
     isa_ok( $tidy, 'HTML::Tidy' );
 
@@ -39,7 +40,8 @@ WARNINGS_ONLY: {
 }
 
 ERRORS_ONLY: {
-    my $args = { force_output => 1 };
+    my $args = { force_output => 1,
+                 'config_file' => 't/ignore.cfg' };
     my $tidy = HTML::Tidy->new( $args );
     isa_ok( $tidy, 'HTML::Tidy' );
 
@@ -53,7 +55,8 @@ ERRORS_ONLY: {
 }
 
 DIES_ON_ERROR: {
-    my $args = { force_output => 1 };
+    my $args = { force_output => 1,
+                 'config_file' => 't/ignore.cfg' };
     my $tidy = HTML::Tidy->new( $args );
     isa_ok( $tidy, 'HTML::Tidy' );
 
