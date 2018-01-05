@@ -9,44 +9,54 @@ use ExtUtils::MakeMaker;
 use ExtUtils::Liblist;
 use Config;
 
+# This 'root' could be manually set here, or
+# supplied through an environment variable TIDY_ROOT
 ###my $iroot = 'F:/Projects/mingw64';
 ###my $iroot = 'F:/Projects/win64-mt';
-my $iroot = 'F:/Projects/software.x64';
-my $libs = '-ltidys';
-my $inc = "-I. -I$iroot/include -I$iroot/include/tidy";
+my $iroot = $ENV{'TIDY_ROOT'};
+if (!$iroot) {
+    print <<'EOF';
 
-eval { require Alien::Tidyp; };
+The environment variable TIDY_ROOT is NOT set. This variable is
+used to find your installation of 'Tidy'. It must include 'tidy.h'
+in the 'include' folder, and 'tidys.lib' in the 'lib' folder.
 
-if ( !$@ ) {
-    print "Using tidyp via Alien::Tidyp\n";
-    $libs = Alien::Tidyp->config('LIBS');
-    $inc = Alien::Tidyp->config('INC');
+See the repository https://github.com/htacg/tidy-html5 for how to
+build and install 'Tidy'. It can be built and installed using cmake 
+build file generator, probably using the same tools you are using 
+here to build this perl wrapper.
+
+EOF
+    exit(1);
 }
-else {
-    print "Alien::Tidyp not found. Looking for for tidys on your system.\n";
-    my @vars = ExtUtils::Liblist->ext( "-L$iroot/lib -ltidys", 0, 1 );
-    $libs = $vars[2];
 
-    if ( !$libs ) {
-        $libs = '-ltidys';
-        print <<'EOF';
+# Have a TIDY_ROOT
+my $libs = '-ltidys';
+my $inc = "-I. -I$iroot/include";
 
-It seems that you don't have tidyp installed.  HTML::Tidy does no
-real work on its own.  It's just a wrapper around tidyp.
+print "Looking for for Tidy on your system.\n";
+my @vars = ExtUtils::Liblist->ext( "-L$iroot/lib -ltidys", 0, 1 );
+$libs = $vars[2];
 
-Please read the README.markdown file for details on how to install tidyp.
+if ( !$libs ) {
+    $libs = '-ltidys';
+    print <<'EOF';
 
-If you do have tidyp installed, but Makefile.PL can't detect it,
+It seems that you don't have Tidy installed.  HTML::Tidy does no
+real work on its own.  It's just a wrapper around library Tidy.
+
+Please read the README.markdown file for details on how to install Tidy.
+
+If you do have Tidy installed, but Makefile.PL can't detect it,
 go ahead and try building.  If HTML::Tidy builds and tests correctly,
 please file a ticket at Github at
-http://github.com/petdance/html-tidy/issues, so we can fix the
+https://github.com/geoffmcl/html-tidy/issues, and maybeo we can fix the
 library detection code.
 
 EOF
     } else {
         print "Found and using '$libs'...\n";
     }
-}
 
 eval { require LWP::Simple; };
 
@@ -88,9 +98,9 @@ if ( $ExtUtils::MakeMaker::VERSION ge '6.45_01' ) {
     $parms->{META_MERGE} = {
         resources => {
             license     => 'http://www.opensource.org/licenses/artistic-license-2.0.php',
-            homepage    => 'http://github.com/petdance/html-tidy',
-            bugtracker  => 'http://github.com/petdance/html-tidy/issues',
-            repository  => 'http://github.com/petdance/html-tidy',
+            homepage    => 'https://github.com/geoffmcl/html-tidy',
+            bugtracker  => 'https://github.com/geoffmcl/html-tidy/issues',
+            repository  => 'https://github.com/geoffmcl/html-tidy',
         }
     };
     $parms->{LICENSE} = 'artistic_2';
