@@ -18,7 +18,8 @@ chomp @expected_messages;
 shift @expected_messages; # First one's blank
 
 IGNORE_BOGOTAG: {
-    my $args = { force_output => 1 };
+    my $args = { force_output => 1,
+		 'config_file' => 't/ignore-text.cfg' };
     my $tidy = HTML::Tidy->new( $args );
     isa_ok( $tidy, 'HTML::Tidy' );
 
