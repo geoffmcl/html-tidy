@@ -1,7 +1,12 @@
 @setlocal
 @REM ####################
 @REM setup
+@REM Have even tried /MT build, but -nodefaultlib still causes problems...
 @set MODMKFIL=1
+@set TMPTIDY=F:\Projects\software.x64
+@if "%TIDY_ROOT%x" == "x" goto GOTTIDY
+@set TMPTIDY=%TIDY_ROOT%
+:GOTTIDY
 @set NEWMKFIL=Makefile.mak
 @set TMPLOG=bldlog-1.txt
 @set BLDDIR=%CD%
@@ -26,6 +31,13 @@
 @if ERRORLEVEL 1 goto ERR0
 @REM call setupqt64
 @cd %BLDDIR%
+
+@REM Check TIDY_ROOT
+@set TIDY_ROOT=%TMPTIDY%
+@echo Environment TIDY_ROOT=%TIDY_ROOT%
+@echo Environment TIDY_ROOT=%TIDY_ROOT% >> %TMPLOG%
+@if NOT EXIST %TIDY_ROOT%\nul goto NOROOT
+
 @REM Remove/Rename previous Makefile
 @if EXIST Makefile @del Makefile
 @REM  http://search.cpan.org/~bingos/ExtUtils-MakeMaker-7.24/lib/ExtUtils/MakeMaker.pm#How_To_Write_A_Makefile.PL
@@ -72,6 +84,10 @@
 @echo Perhaps time for install... TODO:
 @echo.
 @goto END
+
+:NOROOT
+@echo NOT EXIST %TIDY_ROOT% folder! *** FIX ME ***
+@goto ISERR
 
 :NONMK
 @echo Error: NOT EXIST %NEWMKFIL%! *** FIX ME ***
