@@ -1,7 +1,6 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
-#define TIDY_CALL __cdecl
 #include <tidy.h>
 #include <tidybuffio.h>
 #include <stdio.h>
