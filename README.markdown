@@ -56,7 +56,7 @@ Note the additional command - `perl scripts\modmakefile.pl Makefile -o Makefile.
    
 There is a convenient `build-me.bat` script to do the above, except the install, which must be done separately, and may require `administrator` priviledges, depending where perl site libraries are installed. Some batch files used may not be available on your system, but they should only show a warning and not influence the build.
 
-Normally when building and installing **Tidy** the default cmake location for the install is like `C:\Program Files\tidy`, which is **not** very convenient, and be warned, spaces is the path name may cause problems without extra effort. Thus when building and installing **Tidy** you should add an install location of your choice, like `cmake ..\.. -DCMAKE_INSTALL_PREFIX:PATH=d:\path\to\install\tidy`... Then you have a convenient path to use to set `TIDY_ROOT` here.
+Normally when building and installing **Tidy** the default cmake location for the install is like `C:\Program Files\tidy`, which is **not** very convenient, and be warned, spaces in the path name may cause problems without extra effort. Thus when building and installing **Tidy** you should add an install location of your choice, like `cmake ..\.. -DCMAKE_INSTALL_PREFIX:PATH=d:\path\to\install\tidy`... Then you have a convenient path to use to set `TIDY_ROOT` here.
 
 In Windows `HTML::Tidy`, i.e. `Tidy.dll`, is linked with the **static** library `tidys.lib`, so once linked and installed it no longer needs anything from the **Tidy** install. This is also so the **Tidy** DLL, `tidy.dll` does not clash with the `Tidy.dll` built here.
 
