@@ -31,15 +31,20 @@ EOF
 }
 
 # Have a TIDY_ROOT
-my $libs = '-ltidys';
+my $llib = '-ltidys';
+if ($^O =~ /win/i) {
+    $llib = '-ltidys';
+} else {
+    $llib = '-ltidy';
+}
 my $inc = "-I. -I$iroot/include";
 
 print "Looking for for Tidy on your system.\n";
-my @vars = ExtUtils::Liblist->ext( "-L$iroot/lib -ltidys", 0, 1 );
-$libs = $vars[2];
+my @vars = ExtUtils::Liblist->ext( "-L$iroot/lib $llib", 0, 1 );
+my $libs = $vars[2];
 
 if ( !$libs ) {
-    $libs = '-ltidys';
+    $libs = $llib;
     print <<'EOF';
 
 It seems that you don't have Tidy installed.  HTML::Tidy does no
