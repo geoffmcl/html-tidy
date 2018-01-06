@@ -54,9 +54,11 @@
 @if NOT "%MODMKFIL%x" == "1x" goto DNMKFIL
 @REM Until 'ExtUtils::MakeMaker' can be convinced to **NOT** add `-nodefaultlib` to 'Makefile'
 @if EXIST %NEWMKFIL% @del %NEWMKFIL%
-@echo Doing 'call modmakefile Makefile -o %NEWMKFIL%'
-@echo Doing 'call modmakefile Makefile -o %NEWMKFIL%' >> %TMPLOG%
-@call modmakefile Makefile -o %NEWMKFIL% >> %TMPLOG%
+@REM set MODCMD=call modmakefile
+@set MODCMD=perl scripts\modmakefile.pl
+@echo Doing '%MODCMD% Makefile -o %NEWMKFIL%'
+@echo Doing '%MODCMD% Makefile -o %NEWMKFIL%' >> %TMPLOG%
+@%MODCMD% Makefile -o %NEWMKFIL% >> %TMPLOG%
 @if NOT EXIST %NEWMKFIL% goto NONMK
 @set MKFIL=%NEWMKFIL%
 :DNMKFIL
