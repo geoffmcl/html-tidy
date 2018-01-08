@@ -40,6 +40,19 @@ In linux `HTML::Tidy`, i.e. `Tidy.so`, is linked with the **shared** `libtidy`, 
 
 It may be possible to use a `libtidy.so` installed to other locations, but then to load and run this `Tidy.pm`, it may be necessary to `export LD_LIBRARY_PATH=/path/to/libtidy.so`, or something... before each run. Not recommended, explored or tested...
 
+And a small word about `language`. Library **Tidy** has been `internationalized` to some degree, and can ouput message strings based on the current `language` default.
+
+Some of the tests in `make test` do a compare of the **current** message ouput, and an **expected** hard coded string in the particular test. Now naturally that hard code `expected` string output is in `LANG=en_US.UTF-8` - run `$ locale` to check your system. If your system is **not** default `en_US` then these tests may appear to **fail**.
+
+Like in my `Raspbian` RPI linux the default language is `LANG=us_GB.UTF-8` and the `t/cfg-for-parse.t` fails, and others, with like -
+
+```
+#          $got->[0] = 'DATA (3:1) Error: <neck> is not recognised!'
+#     $expected->[0] = 'DATA (3:1) Error: <neck> is not recognized!'
+```
+
+Note the `GB` spelling of `recognized` is with an `s`. So it is neccessary to temporarily set the `language`. I found just doing `$ LANG=C` and **all** tests passed. But maybe there are other ways to do this... This will also apply to a Windows system below.
+
 #### Windows
 
 This is a build using Microsoft Visual Studio, the [community](https://www.visualstudio.com/vs/community/) version is free. The last build for me was using MSVC 14 2005 in 64-bit mode, to match my perl (v5.14.2) 64-bit, by [ActiveState](https://www.activestate.com/)...
@@ -61,6 +74,8 @@ Normally when building and installing **Tidy** the default cmake location for th
 In Windows `HTML::Tidy`, i.e. `Tidy.dll`, is linked with the **static** library `tidys.lib`, so once linked and installed it no longer needs anything from the **Tidy** install. This is also so the **Tidy** DLL, `tidy.dll` does not clash with the `Tidy.dll` built here.
 
 This project may also be buildable using say `MinGW`, or other windows build systems, but it is likely that you would also have to build **Tidy** using the **same** system. 
+
+Note above the unix note about `language` when doing the tests. The `language` needed for the tests is `en_US`, i.e 1033 (0x409), and some tests may appear to **fail** if your system is in a different default **language**, and you may need to temporarily change the `language`. You will need to do your own research on how to do that in your Windows system.
 
 And of course this wrapper must be build with the **same** `bitness`, 32-bit or 64-bit, as your `perl` installation.
 
